@@ -1,0 +1,70 @@
+{% extends "layout.twig" %}
+{% block title %}Dashboard - TicketFlow{% endblock %}
+{% block content %}
+<div class="min-h-screen bg-gray-50">
+    <header class="hero-gradient text-white py-8 px-5 shadow-lg">
+        <div class="content-wrapper flex justify-between items-center">
+            <h1 class="text-3xl font-bold">TicketFlow Dashboard</h1>
+            <a href="/logout.php" class="bg-white/20 border-2 border-white px-6 py-2 rounded-lg font-semibold hover:bg-white hover:text-indigo-600 transition">
+                Logout
+            </a>
+        </div>
+    </header>
+    
+    <main class="py-16 px-5">
+        <div class="content-wrapper">
+            <h2 class="text-3xl font-bold mb-8 text-gray-800">Ticket Statistics</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+                <div class="bg-white p-8 rounded-xl shadow-md border-l-4 border-blue-500 hover:-translate-y-1 hover:shadow-lg transition flex items-center gap-5">
+                    <div class="text-5xl">📊</div>
+                    <div>
+                        <h3 class="text-4xl font-bold text-gray-800">{{ stats.total }}</h3>
+                        <p class="text-gray-600 font-semibold">Total Tickets</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-md border-l-4 border-green-500 hover:-translate-y-1 hover:shadow-lg transition flex items-center gap-5">
+                    <div class="text-5xl">🟢</div>
+                    <div>
+                        <h3 class="text-4xl font-bold text-gray-800">{{ stats.open }}</h3>
+                        <p class="text-gray-600 font-semibold">Open Tickets</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-md border-l-4 border-yellow-500 hover:-translate-y-1 hover:shadow-lg transition flex items-center gap-5">
+                    <div class="text-5xl">🟡</div>
+                    <div>
+                        <h3 class="text-4xl font-bold text-gray-800">{{ stats.in_progress }}</h3>
+                        <p class="text-gray-600 font-semibold">In Progress</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-md border-l-4 border-gray-500 hover:-translate-y-1 hover:shadow-lg transition flex items-center gap-5">
+                    <div class="text-5xl">⚫</div>
+                    <div>
+                        <h3 class="text-4xl font-bold text-gray-800">{{ stats.closed }}</h3>
+                        <p class="text-gray-600 font-semibold">Resolved Tickets</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white p-10 rounded-xl shadow-md">
+                <h2 class="text-2xl font-bold mb-5 text-gray-800">Quick Actions</h2>
+                <div class="flex gap-4 flex-wrap">
+                    <a href="/tickets.php" class="btn-primary px-8 py-3 rounded-lg hover:bg-indigo-700 transition">
+                        Manage Tickets
+                    </a>
+                    <a href="/tickets.php" class="btn-secondary px-8 py-3 rounded-lg hover:bg-gray-700 transition">
+                        Create New Ticket
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="footer mt-auto">
+        <div class="content-wrapper"><p>&copy; 2025 TicketFlow. Built for HNG Internship.</p></div>
+    </footer>
+</div>
+{% endblock %}
