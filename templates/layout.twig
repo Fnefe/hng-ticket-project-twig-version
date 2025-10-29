@@ -1,17 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{% block title %}TicketFlow{% endblock %}</title>
-<link rel="stylesheet" href="/css/styles.css">
-<link rel="icon" href="data:,">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}TicketFlow{% endblock %}</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .content-wrapper { max-width: 1440px; margin: 0 auto; padding: 0 20px; }
+        
+        .hero-gradient { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        
+        .decorative-circle { 
+            position: absolute; 
+            border-radius: 50%; 
+            background: rgba(255,255,255,0.1); 
+        }
+        
+        .wave-container { position: absolute; bottom: 0; left: 0; width: 100%; }
+        .wave-container svg { display: block; width: 100%; }
+        
+        .footer { background: #1f2937; color: white; padding: 30px 20px; text-align: center; }
+        
+        .btn { 
+            padding: 12px 24px; 
+            border-radius: 8px; 
+            font-weight: 600; 
+            text-decoration: none; 
+            display: inline-block; 
+            transition: all 0.3s; 
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary { background: #667eea; color: white; }
+        .btn-primary:hover { background: #5568d3; }
+        .btn-secondary { background: #6b7280; color: white; }
+        .btn-secondary:hover { background: #4b5563; }
+        
+        .status-badge { padding: 5px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; }
+        .status-open { background: #d1fae5; color: #065f46; }
+        .status-progress { background: #fef3c7; color: #92400e; }
+        .status-closed { background: #e5e7eb; color: #374151; }
+        
+        .toast { 
+            position: fixed; 
+            top: 20px; 
+            right: 20px; 
+            padding: 15px 20px; 
+            border-radius: 8px; 
+            color: white; 
+            font-weight: 600; 
+            z-index: 1000; 
+        }
+        .toast-success { background: #10b981; }
+        .toast-error { background: #ef4444; }
+        
+        /* Landing page specific */
+        .min-h-screen { min-height: 100vh; }
+        .flex { display: flex; }
+        .flex-col { flex-direction: column; }
+        .items-center { align-items: center; }
+        .justify-center { justify-content: center; }
+        .text-center { text-align: center; }
+        .relative { position: relative; }
+        .overflow-hidden { overflow: hidden; }
+        
+        .text-white { color: white; }
+        .text-5xl { font-size: 3rem; }
+        .text-xl { font-size: 1.25rem; }
+        .text-4xl { font-size: 2.25rem; }
+        .text-2xl { font-size: 1.5rem; }
+        .text-sm { font-size: 0.875rem; }
+        
+        .font-bold { font-weight: 700; }
+        .font-semibold { font-weight: 600; }
+        
+        .mb-5 { margin-bottom: 1.25rem; }
+        .mb-8 { margin-bottom: 2rem; }
+        .mb-12 { margin-bottom: 3rem; }
+        .mt-5 { margin-top: 1.25rem; }
+        
+        .py-24 { padding-top: 6rem; padding-bottom: 6rem; }
+        .py-20 { padding-top: 5rem; padding-bottom: 5rem; }
+        .py-8 { padding-top: 2rem; padding-bottom: 2rem; }
+        .px-5 { padding-left: 1.25rem; padding-right: 1.25rem; }
+        .px-8 { padding-left: 2rem; padding-right: 2rem; }
+        .p-8 { padding: 2rem; }
+        
+        .gap-5 { gap: 1.25rem; }
+        .gap-8 { gap: 2rem; }
+        
+        .rounded-xl { border-radius: 0.75rem; }
+        .rounded-lg { border-radius: 0.5rem; }
+        
+        .shadow-md { box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
+        
+        .bg-white { background-color: white; }
+        .bg-gray-50 { background-color: #f9fafb; }
+        .bg-transparent { background-color: transparent; }
+        
+        .border-2 { border-width: 2px; }
+        .border-white { border-color: white; }
+        
+        .z-10 { z-index: 10; }
+        
+        .hover\:-translate-y-1:hover { transform: translateY(-0.25rem); }
+        .hover\:-translate-y-0\.5:hover { transform: translateY(-0.125rem); }
+        .hover\:shadow-lg:hover { box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); }
+        
+        .transition { transition-property: all; transition-duration: 0.3s; }
+        
+        .grid { display: grid; }
+        .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+        
+        @media (min-width: 768px) {
+            .md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        }
+        
+        .flex-wrap { flex-wrap: wrap; }
+        
+        .text-gray-600 { color: #6b7280; }
+        .text-gray-800 { color: #1f2937; }
+    </style>
+    {% block styles %}{% endblock %}
 </head>
 <body>
-{%block content%}{% endblock %}
-{% if toast %}
-<div class="toast toast-{{toast.type}}"
-<script>setTimeout(() => document.getElementById('toast)?.remove(), 3000);</script>
-{% endif %}
+    {% block content %}{% endblock %}
+    
+    {% if toast %}
+    <div class="toast toast-{{ toast.type }}" id="toast">{{ toast.message }}</div>
+    <script>
+        setTimeout(() => document.getElementById('toast')?.remove(), 3000);
+    </script>
+    {% endif %}
+    
+    {% block scripts %}{% endblock %}
 </body>
-<html>
+</html>
